@@ -19,4 +19,9 @@ public class TicketServiceImpl implements TicketService {
     public boolean buyTicket(int personId, int sessionId, int cinemaPlaceId) {
         return ticketRepository.buyTicket(personId, sessionId, cinemaPlaceId);
     }
+
+    @Override
+    public void returnTicket(int id) {
+        ticketRepository.returnTicket(id);
+    }
 }

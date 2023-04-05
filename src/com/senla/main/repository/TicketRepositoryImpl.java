@@ -56,4 +56,19 @@ public class TicketRepositoryImpl implements TicketRepository {
             return false;
         }
     }
+
+    @Override
+    public void returnTicket(int id) {
+        try (Connection connection = ConnectionManager.open()) {
+            PreparedStatement statement =
+                    connection.prepareStatement("UPDATE ticket SET p_return = 1 WHERE id = ?;");
+            statement.setString(1, String.valueOf(id));
+
+            statement.execute();
+            System.out.println("Билет успешно возращен");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

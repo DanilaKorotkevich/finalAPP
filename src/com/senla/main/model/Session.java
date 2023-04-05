@@ -40,7 +40,7 @@ public class Session {
 
     @Override
     public String toString() {
-        return idSession +
+        return "Идентификатор сеанса " + idSession +
                 " Фильм " + film +
                 " date " + date;
     }

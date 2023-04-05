@@ -2,154 +2,157 @@ package com.senla.main.controller;
 
 import com.senla.main.model.CinemaPlace;
 import com.senla.main.model.Person;
-import com.senla.main.model.Session;
 import com.senla.main.service.*;
 import com.senla.main.util.Print;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PersonController {
 
     private Person person;
-    private Session session;
     private PersonService personService = new PersonServiceImpl();
     private FilmService filmService = new FilmServiceImpl();
     private TicketService ticketService = new TicketServiceImpl();
     private final Scanner scanner = new Scanner(System.in);
     private CinemaPlaceService cinemaPlaceService = new CinemaPlaceServiceImpl();
 
-    private final String ONE = "1";
-    private final String TWO = "2";
-    private final String THREE = "3";
-    private final String ZERO = "0";
+    private final int ONE = 1;
+    private final int TWO = 2;
+    private final int THREE = 3;
+    private final int ZERO = 0;
 
     public void startMenu() throws ClassNotFoundException {
 
-        boolean isExist;
         Print.HELLO();
-        do {
-            Print.START_MENU();
-            String step1 = scanner.nextLine();
-            isExist = firstStep(step1);
-        } while (isExist);
-        isExist = true;
-        while (isExist == true) {
+        Print.START_MENU();
+        int step1 = scanner.nextInt();
+        firstStep(step1);
+
             if (person != null) {
                 Print.FIRST_MENU();
-                String step2 = scanner.nextLine();
-                isExist = secondStep(step2);
+                int step2 = scanner.nextInt();
+                secondStep(step2);
             }
 
-        }
     }
 
-    private boolean firstStep(String step1) throws ClassNotFoundException {
-        boolean isExist = true;
+    private void firstStep(int step1) throws ClassNotFoundException {
 
             switch (step1) {
+
                 case ONE:
                     Print.REG_MENU();
                     person = personService.create();
-                    isExist = false;
                     break;
+
                 case TWO:
                     Print.ENTRY_MENU();
                     person = personService.authentication();
-                    isExist = false;
                     break;
 
                 case ZERO: {
                     Print.EXIT();
+                    System.exit(0);
+                    break;
                 }
+
                 default:
                     Print.WAIT_MESS();
             }
-            return isExist;
     }
 
-    private boolean secondStep(String step2) throws ClassNotFoundException {
-        boolean isExist = true;
+    private void secondStep(int step2) throws ClassNotFoundException {
 
         switch (step2) {
+
             case ONE :
-                isExist = showSessions();
+                showSessions();
                 break;
+
             case TWO :
                 buyTicket();
                 break;
+
             case THREE :
-                isExist = checkBoughtTickets();
+                checkBoughtTickets();
                 break;
+
             case ZERO :
-                Print.SIGN_OUT();
                 startMenu();
                 break;
+
             default:
                 Print.WAIT_MESS();
         }
-
-        return isExist;
     }
 
-    private void buyTicket() {
-        boolean isExist = true;
+    private void buyTicket() throws ClassNotFoundException {
 
-        System.out.println("Меню покупка билетов\n");
-            System.out.println("доступные сеансы");
+        Print.BUY_MENU();
+        Print.AVAILABLE_SESSION();
 
-            while (isExist) {
                 filmService.getSessionList().forEach(System.out::println);
-                System.out.println("Выберите сеанс: ");
+                Print.CHOSE_SESSION_ID();
                 int sessionId = scanner.nextInt();
                 ArrayList<CinemaPlace> freePlacesArr = cinemaPlaceService.getFreePlaces(sessionId);
                 freePlacesArr.forEach(System.out::println);
-                System.out.println("Укажите идентификатор места: ");
-                try {
-                    int cinemaPlace = scanner.nextInt();
-                    ticketService.buyTicket(person.getId(), sessionId, cinemaPlace);
 
-                    System.out.println("нажмите '0', чтобы вернуться назад");
-                    int backStep = scanner.nextInt();
-                    if (backStep == 0) {
-                        isExist = false;
+                Print.CHOSE_PLACE_ID();
+                int cinemaPlace = scanner.nextInt();
+                ticketService.buyTicket(person.getId(), sessionId, cinemaPlace);
+
+                Print.BACK();
+                int backStep = scanner.nextInt();
+                    if (backStep == ZERO) {
+                        Print.FIRST_MENU();
+                        int step2 = scanner.nextInt();
+                        secondStep(step2);
                     }
-                } catch (RuntimeException e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage());
-                }
-            }
     }
 
-    private boolean showSessions() {
-        boolean isExist = true;
+    private void showSessions() throws ClassNotFoundException {
 
-        System.out.println("меню сеансы");
-        System.out.println("доступные сеансы");
+        Print.SESSION_MENU();
+        Print.AVAILABLE_SESSION();
         filmService.getSessionList().forEach(System.out::println);
         Print.BACK();
-        String backStep = scanner.nextLine();
+        int backStep = scanner.nextInt();
 
         if (backStep == ZERO) {
-            isExist = false;
+            Print.FIRST_MENU();
+            int step2 = scanner.nextInt();
+            secondStep(step2);
         }
-
-        return isExist;
     }
 
-    private boolean checkBoughtTickets() {
+    private void checkBoughtTickets() throws ClassNotFoundException {
+
+        int chose = 0;
         boolean isExist = true;
-
-        System.out.println("меню купленные билеты:\n");
+        Print.BUY_TICKET_MENU();
         ticketService.getTickets(person.getId()).forEach(System.out::println);
-        Print.BACK();
-        String backStep = scanner.nextLine();
-
-        if (backStep == ZERO) {
-            isExist = false;
+        
+        while (isExist) {
+            System.out.println("Введите '2', если хотите вернуть билет");
+            Print.BACK();
+            chose = scanner.nextInt();
+            if (chose == ZERO) {
+                Print.FIRST_MENU();
+                int step2 = scanner.nextInt();
+                secondStep(step2);
+            }
+            else if (chose == TWO)
+                returnTicket();
+                ticketService.getTickets(person.getId()).forEach(System.out::println);
         }
+    }
 
-        return isExist;
+    private void returnTicket() {
+        System.out.println("укажите номер билета который хотите вернуть: ");
+        int ticket = scanner.nextInt();
+        ticketService.returnTicket(ticket);
+
     }
 
 }

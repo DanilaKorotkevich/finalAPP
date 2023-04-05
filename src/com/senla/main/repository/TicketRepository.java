@@ -9,4 +9,6 @@ public interface TicketRepository {
     List<Ticket> getTickets(int id);
 
     boolean buyTicket(int personId, int sessionId, int cinemaPlaceId);
+
+    void returnTicket(int id);
 }
