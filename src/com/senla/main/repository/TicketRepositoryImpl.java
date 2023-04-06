@@ -3,6 +3,7 @@ package com.senla.main.repository;
 import com.senla.main.model.CinemaPlace;
 import com.senla.main.model.Ticket;
 import com.senla.main.util.ConnectionManager;
+import com.senla.main.util.Print;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class TicketRepositoryImpl implements TicketRepository {
             statement.setString(2, String.valueOf(sessionId));
             statement.setString(3, String.valueOf(cinemaPlaceId));
             statement.execute();
-            System.out.println("Билет успешно приобретен");
+            Print.PRINT_GET_TICKET_COMPLETE();
             return true;
 
         } catch (SQLException e) {
@@ -65,7 +66,7 @@ public class TicketRepositoryImpl implements TicketRepository {
             statement.setString(1, String.valueOf(id));
 
             statement.execute();
-            System.out.println("Билет успешно возращен");
+            Print.PRINT_RETURN_TICKET_COMPLETE();
 
         } catch (SQLException e) {
             e.printStackTrace();

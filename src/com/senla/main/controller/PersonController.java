@@ -24,20 +24,29 @@ public class PersonController {
 
     public void startMenu() throws ClassNotFoundException {
 
+        int step1 = -1;
         Print.HELLO();
-        Print.START_MENU();
-        int step1 = scanner.nextInt();
-        firstStep(step1);
+        while (step1 != ZERO) {
 
-            if (person != null) {
-                Print.FIRST_MENU();
-                int step2 = scanner.nextInt();
-                secondStep(step2);
+            Print.START_MENU();
+            try {
+                step1 = scanner.nextInt();
+                step1 = firstStep(step1);
+
+                if (person != null) {
+                    Print.FIRST_MENU();
+                    int step2 = scanner.nextInt();
+                    secondStep(step2);
+                }
+            } catch (RuntimeException e) {
+                scanner.nextLine();
+                Print.WAIT_MESS();
+
             }
-
+        }
     }
 
-    private void firstStep(int step1) throws ClassNotFoundException {
+    private int firstStep(int step1) throws ClassNotFoundException {
 
             switch (step1) {
 
@@ -60,6 +69,7 @@ public class PersonController {
                 default:
                     Print.WAIT_MESS();
             }
+            return step1;
     }
 
     private void secondStep(int step2) throws ClassNotFoundException {
@@ -84,6 +94,7 @@ public class PersonController {
 
             default:
                 Print.WAIT_MESS();
+
         }
     }
 
@@ -134,7 +145,7 @@ public class PersonController {
         ticketService.getTickets(person.getId()).forEach(System.out::println);
         
         while (isExist) {
-            System.out.println("Введите '2', если хотите вернуть билет");
+            Print.RETURN_TICKET();
             Print.BACK();
             chose = scanner.nextInt();
             if (chose == ZERO) {
@@ -149,7 +160,7 @@ public class PersonController {
     }
 
     private void returnTicket() {
-        System.out.println("укажите номер билета который хотите вернуть: ");
+        Print.ENTER_RETURNED_TICKET();
         int ticket = scanner.nextInt();
         ticketService.returnTicket(ticket);
 

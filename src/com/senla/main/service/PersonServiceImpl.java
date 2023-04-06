@@ -3,37 +3,39 @@ package com.senla.main.service;
 import com.senla.main.model.Person;
 import com.senla.main.repository.PersonRepository;
 import com.senla.main.repository.PersonRepositoryImpl;
+import com.senla.main.util.Print;
 
 import java.util.Scanner;
 
 public class PersonServiceImpl implements PersonService {
 
     private final PersonRepository personRepository = new PersonRepositoryImpl();
+    private final Scanner scanner = new Scanner(System.in);
 
     @Override
     public Person create() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Введите логин: ");
+        Print.ENTER_LOGIN();
         String username = scanner.nextLine();
-        System.out.print("Введите пароль: ");
+        Print.ENTER_PASSWORD();
         String password = scanner.nextLine();
 
         Person person = new Person(username, password);
-        System.out.println("Регистрация прошла успешно");
+        Print.REG_COMPLETE();
         return person;
     }
 
     @Override
     public Person authentication() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Введите логин: ");
+        Print.ENTER_LOGIN();
         String username = scanner.nextLine();
-        System.out.print("Введите пароль: ");
+        Print.ENTER_PASSWORD();
         String password = scanner.nextLine();
 
         Person person = new Person(username, password);
         if (personRepository.check(person)) {
             return person;
+        } else {
+            Print.ENTRY_ERROR();
         }
         return null;
     }

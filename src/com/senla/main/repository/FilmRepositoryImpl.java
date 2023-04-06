@@ -24,7 +24,7 @@ public class FilmRepositoryImpl implements FilmRepository {
                 int id_session = resultSet.getInt("id_session");
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
-                Date date = resultSet.getDate("date");
+                Timestamp date = resultSet.getTimestamp("date");
                 Session session = new Session (id_session, new Film(id, name), date);
                 sessions.add(session);
             }

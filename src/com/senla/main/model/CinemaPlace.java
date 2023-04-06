@@ -2,9 +2,9 @@ package com.senla.main.model;
 
 public class CinemaPlace {
 
-    int id;
-    int row;
-    int place;
+    private int id;
+    private int row;
+    private int place;
 
     public CinemaPlace(int id, int row, int place) {
         this.id = id;

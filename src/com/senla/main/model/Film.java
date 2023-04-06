@@ -1,7 +1,5 @@
 package com.senla.main.model;
 
-import java.sql.Timestamp;
-
 public class Film {
 
     private int id;

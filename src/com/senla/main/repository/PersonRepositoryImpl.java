@@ -47,7 +47,7 @@ public class PersonRepositoryImpl implements PersonRepository {
             return false;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.getMessage();
             return false;
         }
     }

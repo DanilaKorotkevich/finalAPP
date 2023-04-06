@@ -8,6 +8,7 @@ public final class ConnectionManager {
     private static final String url = "jdbc:mysql://127.0.0.1:3307/cinema";
     private static final String userName = "root";
     private static final String password = "";
+    public static final String DRIVER_LOAD_ERROR = "ошибка загрузки драйвера";
 
     static {
         loadDriver();
@@ -25,7 +26,7 @@ public final class ConnectionManager {
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException("ошибка загрузки драйвера");
+            throw new RuntimeException(DRIVER_LOAD_ERROR);
         }
     }
 

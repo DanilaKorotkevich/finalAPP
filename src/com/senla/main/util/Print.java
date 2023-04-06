@@ -39,15 +39,11 @@ public class Print {
     }
 
     public static final void WAIT_MESS() {
-        System.out.println("Вы ввели некоректные данные, повторите ввод:");
+        System.out.println("Вы ввели некоректные данные, повторите ввод:\n");
     }
 
     public static final void BACK() {
         System.out.println("Введите '0', чтобы вернуться назад");
-    }
-
-    public static final void SIGN_OUT() {
-        System.out.println("Введите '1', чтобы вернуться назад");
     }
 
     public static final void BUY_MENU() {
@@ -72,5 +68,37 @@ public class Print {
 
     public static final void BUY_TICKET_MENU() {
         System.out.println("Меню купленные билеты\n");
+    }
+
+    public static final void RETURN_TICKET() {
+        System.out.println("Введите '2', если хотите вернуть билет");
+    }
+
+    public static final void ENTER_RETURNED_TICKET() {
+        System.out.println("укажите номер билета который хотите вернуть: ");
+    }
+
+    public static final void ENTER_LOGIN() {
+        System.out.printf("Введите логин: ");
+    }
+
+    public static final void ENTER_PASSWORD() {
+        System.out.printf("Введите пароль: ");
+    }
+
+    public static final void REG_COMPLETE() {
+        System.out.println("Регистрация прошла успешно");
+    }
+
+    public static final void ENTRY_ERROR() {
+        System.out.println("Ошибка входа, проверьте логин или пароль");
+    }
+
+    public static final void PRINT_GET_TICKET_COMPLETE() {
+        System.out.println("Билет успешно приобретен");
+    }
+
+    public static final void PRINT_RETURN_TICKET_COMPLETE() {
+        System.out.println("Билет успешно возвращен");
     }
 }

@@ -1,7 +1,5 @@
 package com.senla.main.service;
 
-
-import com.senla.main.model.Film;
 import com.senla.main.model.Session;
 import com.senla.main.repository.FilmRepository;
 import com.senla.main.repository.FilmRepositoryImpl;

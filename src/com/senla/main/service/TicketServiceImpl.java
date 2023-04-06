@@ -8,7 +8,7 @@ import java.util.List;
 
 public class TicketServiceImpl implements TicketService {
 
-    TicketRepository ticketRepository = new TicketRepositoryImpl();
+    private final TicketRepository ticketRepository = new TicketRepositoryImpl();
 
     @Override
     public List<Ticket> getTickets(int id) {

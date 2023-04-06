@@ -14,30 +14,6 @@ public class Session {
         this.date = date;
     }
 
-    public int getIdSession() {
-        return idSession;
-    }
-
-    public void setIdSession(int idSession) {
-        this.idSession = idSession;
-    }
-
-    public Film getFilm() {
-        return film;
-    }
-
-    public void setFilm(Film film) {
-        this.film = film;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     @Override
     public String toString() {
         return "Идентификатор сеанса " + idSession +
